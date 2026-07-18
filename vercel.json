@@ -3,11 +3,11 @@
   "framework": "flask",
   "regions": ["sin1"],
   "functions": {
-  "app.py": {
-    "maxDuration": 30,
-    "includeFiles": "templates/**"
-  }
-},
+    "app.py": {
+      "maxDuration": 30,
+      "includeFiles": "templates/**/*"
+    }
+  },
   "headers": [
     {
       "source": "/(.*)",
