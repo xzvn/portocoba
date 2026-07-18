@@ -1,9 +1,21 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "regions": ["sin1"],
   "functions": {
     "app.py": {
       "maxDuration": 30,
-      "includeFiles": "portfolio/templates/**"
+      "includeFiles": "portfolio/templates/**",
+      "excludeFiles": "{tests/**,docs/**,scripts/**,PANDUAN_STEP_BY_STEP.md,STRUKTUR_PROYEK.txt}"
     }
-  }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    }
+  ]
 }

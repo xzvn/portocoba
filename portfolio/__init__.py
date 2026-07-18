@@ -3,7 +3,7 @@ from pathlib import Path
 from flask import Flask, jsonify, send_from_directory
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-from .config import Config
+from .config import Config, apply_runtime_config
 from .extensions import csrf, db, login_manager
 
 
@@ -18,6 +18,7 @@ def create_app(config_object=Config):
     )
 
     app.config.from_object(config_object)
+    apply_runtime_config(app)
 
     app.wsgi_app = ProxyFix(
         app.wsgi_app,
@@ -73,6 +74,6 @@ def create_app(config_object=Config):
 
     @app.errorhandler(413)
     def file_too_large(_error):
-        return jsonify({"success": False, "message": "Ukuran file terlalu besar. Maksimal 8 MB."}), 413
+        return jsonify({"success": False, "message": "Ukuran file terlalu besar. Maksimal 4 MB."}), 413
 
     return app

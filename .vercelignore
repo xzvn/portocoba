@@ -1,8 +1,15 @@
 .env
+.env.*
+!.env.example
+.git/
 .venv/
 venv/
 __pycache__/
 *.pyc
 *.db
+.pytest_cache/
 tests/
-docs/mockup/
+docs/
+scripts/
+PANDUAN_STEP_BY_STEP.md
+STRUKTUR_PROYEK.txt
