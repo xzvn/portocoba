@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% block title %}{{ profile.brand_name if profile else 'Portofolio' }} | Portfolio{% endblock %}
+{% block content %}
+{% set hero_fallback = '/images/default-hero.jpg' %}
+{% set about_fallback = '/images/default-about.jpg' %}
+<nav class="site-nav" aria-label="Navigasi utama">
+    <div class="container nav-inner">
+        <a class="brand" href="#home">{{ profile.brand_name if profile else 'Portofolio' }}</a>
+        <div class="desktop-nav">
+            <a class="nav-link active" href="#home">Home</a>
+            <a class="nav-link" href="#about">Tentang</a>
+            <a class="nav-link" href="#skills">Skills</a>
+            <a class="nav-link" href="#experience">Pengalaman</a>
+            <a class="nav-link" href="#projects">Proyek</a>
+            <a class="nav-link" href="#contact">Kontak</a>
+        </div>
+        <button class="menu-toggle" type="button" aria-controls="mobile-menu" aria-expanded="false">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+    </div>
+    <div id="mobile-menu" class="mobile-nav" hidden>
+        <a href="#home">Home</a><a href="#about">About</a><a href="#skills">Skills</a>
+        <a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
+    </div>
+</nav>
+
+<main>
+    <section class="hero container section-anchor" id="home">
+        <div class="hero-grid">
+            <div class="hero-copy reveal">
+                <div class="eyebrow">{{ profile.availability_text if profile else 'Hallo Saya!' }}</div>
+                <h1> <span>{{ profile.full_name if profile else 'Nama Lengkap' }}</span></h1>
+                <p class="hero-headline">{{ profile.headline if profile else 'Web Developer & UI/UX Enthusiast' }}</p>
+                <div class="hero-actions">
+                    <a class="btn btn-primary" href="#projects">Lihat Proyek</a>
+                    {% if profile and profile.cv_url %}<a class="btn btn-outline" href="{{ profile.cv_url }}" target="_blank" rel="noopener">Kirim Pesan</a>{% else %}<a class="btn btn-outline" href="#contact">Kirim Pesan</a>{% endif %}
+                </div>
+                
+            </div>
+            <div class="hero-media reveal">
+                <div class="hero-glow"></div>
+                <div class="hero-image-frame">
+                    <img src="{{ profile.hero_image_url if profile and profile.hero_image_url else hero_fallback }}" alt="Foto profesional {{ profile.full_name if profile else 'pemilik portofolio' }}">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section section-anchor" id="about">
+        <div class="container about-grid">
+            <div class="about-media reveal">
+                <div class="about-image-frame"><img src="{{ profile.about_image_url if profile and profile.about_image_url else about_fallback }}" alt="Ruang kerja profesional"></div>
+            </div>
+            <div class="about-copy reveal">
+                <div class="section-heading align-left"><h2>Tentang Saya</h2><span class="heading-line"></span></div>
+                <p class="lead">{{ profile.about_text if profile else '' }}</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="skills-section container section-anchor" id="skills">
+        <div class="section-heading reveal"><h2>Kemampuan Saya</h2><p></p></div>
+        <div class="skill-grid">
+            {% for skill in skills %}
+            <article class="skill-card reveal">
+                <span class="material-symbols-outlined skill-icon">{{ skill.icon }}</span>
+                <h3>{{ skill.category }}</h3>
+                <ul>{% for item in skill.item_list %}<li>{{ item }}</li>{% endfor %}</ul>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="experience-section section-anchor" id="experience">
+        <div class="container experience-grid">
+            <div class="experience-intro reveal"><h2>Experience &<br>Education</h2><p></p></div>
+            <div class="timeline">
+                {% for item in experiences %}
+                <article class="timeline-item reveal">
+                    <div class="timeline-marker {% if item.is_active %}active{% endif %}"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-period">{{ item.period }}</span>
+                        <h3>{{ item.title }}</h3>
+                        <strong>{{ item.organization }}</strong>
+                        <p>{{ item.description }}</p>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="projects-section container section-anchor" id="projects">
+        <div class="project-heading reveal">
+            <div><h2>Featured Projects</h2><p></p></div>
+
+        </div>
+        <div class="project-grid">
+            {% for project in projects %}
+            <article class="project-card reveal">
+                <div class="project-image"><img src="{{ project.image_url or '/images/project-placeholder.svg' }}" alt="Tampilan proyek {{ project.title }}"></div>
+                <div class="project-body">
+                    <div class="project-tags">{% for tech in project.tech_list %}<span>{{ tech }}</span>{% endfor %}</div>
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description }}</p>
+                    <div class="project-links">
+                        {% if project.live_url %}<a href="{{ project.live_url }}" target="_blank" rel="noopener"><span class="material-symbols-outlined">visibility</span>Live Demo</a>{% endif %}
+                        {% if project.code_url %}<a href="{{ project.code_url }}" target="_blank" rel="noopener"><span class="material-symbols-outlined">terminal</span>Code</a>{% endif %}
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="contact-section container section-anchor" id="contact">
+        <div class="contact-card reveal">
+            <div class="contact-info">
+                <div><h2>Mari Kerja Sama</h2><p></p></div>
+                <div class="contact-list">
+                    <div><span class="material-symbols-outlined">mail</span><p><small>Email Me</small><strong>{{ profile.email if profile else '' }}</strong></p></div>
+                    <div><span class="material-symbols-outlined">call</span><p><small>Call Me</small><strong>{{ profile.phone if profile else '' }}</strong></p></div>
+                    <div><span class="material-symbols-outlined">location_on</span><p><small>Location</small><strong>{{ profile.location if profile else '' }}</strong></p></div>
+                </div>
+            </div>
+            <div class="contact-form-wrap">
+                <form method="post" action="{{ url_for('public.contact') }}" class="contact-form">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="form-row">
+                        <label>Nama<input type="text" nama="nama" placeholder="Masukkan Nama Kamu" maxlength="150" required></label>
+                        <label>Email<input type="email" name="email" placeholder="Masukkan Email Kamu" maxlength="190" required></label>
+                    </div>
+                    <label>Subject<input type="text" name="subject" placeholder="Judul Pesan" maxlength="220" required></label>
+                    <label>Pesan<textarea name="message" rows="5" placeholder="Tulis Pesan Kamu" maxlength="5000" required></textarea></label>
+                    <button class="btn btn-primary submit-btn" type="submit">Kirim Pesan</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="container footer-grid">
+        <div><a class="brand" href="#home">{{ profile.brand_name if profile else 'Portofolio' }}</a><p>© {{ 2026 }} {{ profile.footer_text if profile else '' }}. All rights reserved.</p></div>
+        <div class="footer-links"><a href="#home">Home</a><a href="#about">About</a><a href="#projects">Projects</a><a href="{{ url_for('auth.login') }}">Admin</a></div>
+        <div class="footer-social">
+            {% if profile and profile.linkedin_url %}<a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener"><span class="material-symbols-outlined">share</span></a>{% endif %}
+            {% if profile and profile.github_url %}<a href="{{ profile.github_url }}" target="_blank" rel="noopener"><span class="material-symbols-outlined">terminal</span></a>{% endif %}
+            <a class="back-to-top" href="#home"><span class="material-symbols-outlined">arrow_upward</span></a>
+        </div>
+    </div>
+</footer>
+{% endblock %}

@@ -1,0 +1,9 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.env
+portfolio_local.db
+.pytest_cache/
+.DS_Store
+.vscode/

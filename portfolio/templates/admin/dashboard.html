@@ -1,0 +1,16 @@
+{% extends "admin/base.html" %}
+{% block heading %}Dashboard{% endblock %}
+{% block content %}
+<div class="stat-grid">
+    <article><span class="material-symbols-outlined">code</span><strong>{{ counts.skills }}</strong><p>Kelompok skill</p></article>
+    <article><span class="material-symbols-outlined">timeline</span><strong>{{ counts.experiences }}</strong><p>Pengalaman</p></article>
+    <article><span class="material-symbols-outlined">work</span><strong>{{ counts.projects }}</strong><p>Proyek</p></article>
+    <article><span class="material-symbols-outlined">mark_email_unread</span><strong>{{ counts.unread }}</strong><p>Pesan belum dibaca</p></article>
+</div>
+<section class="admin-card">
+    <div class="card-title"><h2>Pesan terbaru</h2><a class="admin-btn secondary" href="{{ url_for('admin.messages') }}">Lihat semua</a></div>
+    <div class="table-wrap"><table><thead><tr><th>Nama</th><th>Subjek</th><th>Tanggal</th><th>Status</th></tr></thead><tbody>
+    {% for item in recent_messages %}<tr><td><a href="{{ url_for('admin.message_detail', item_id=item.id) }}">{{ item.name }}</a></td><td>{{ item.subject }}</td><td>{{ item.created_at.strftime('%d-%m-%Y %H:%M') }}</td><td><span class="status {{ 'read' if item.is_read else 'unread' }}">{{ 'Dibaca' if item.is_read else 'Baru' }}</span></td></tr>{% else %}<tr><td colspan="4">Belum ada pesan.</td></tr>{% endfor %}
+    </tbody></table></div>
+</section>
+{% endblock %}

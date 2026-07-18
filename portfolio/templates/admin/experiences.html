@@ -1,0 +1,5 @@
+{% extends "admin/base.html" %}{% block heading %}Experience & Education{% endblock %}{% block content %}
+<div class="page-actions"><a class="admin-btn primary" href="{{ url_for('admin.experience_form') }}">+ Tambah Data</a></div>
+<section class="admin-card"><div class="table-wrap"><table><thead><tr><th>Urutan</th><th>Periode</th><th>Judul</th><th>Organisasi</th><th>Tipe</th><th>Aksi</th></tr></thead><tbody>
+{% for item in experiences %}<tr><td>{{ item.sort_order }}</td><td>{{ item.period }}</td><td>{{ item.title }}</td><td>{{ item.organization }}</td><td>{{ item.item_type }}</td><td class="aksi"><a href="{{ url_for('admin.experience_form', item_id=item.id) }}">Edit</a><form action="{{ url_for('admin.experience_delete', item_id=item.id) }}" method="post" data-confirm="Hapus data ini?"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button>Hapus</button></form></td></tr>{% endfor %}
+</tbody></table></div></section>{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "admin/base.html" %}
+{% block heading %}Profil Utama{% endblock %}
+{% block content %}
+<form class="admin-card admin-form" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form-grid two">
+        <label>Nama brand<input name="brand_name" value="{{ profile.brand_name or '' }}" required></label>
+        <label>Nama lengkap<input name="full_name" value="{{ profile.full_name or '' }}" required></label>
+        <label class="full">Headline<input name="headline" value="{{ profile.headline or '' }}" required></label>
+        <label class="full">Deskripsi singkat<textarea name="short_intro" rows="3" required>{{ profile.short_intro or '' }}</textarea></label>
+        <label>Teks ketersediaan<input name="availability_text" value="{{ profile.availability_text or '' }}"></label>
+        <label>Pengalaman<input name="years_experience" value="{{ profile.years_experience or '' }}"></label>
+        <label class="full">Tentang saya paragraf 1<textarea name="about_text" rows="5" required>{{ profile.about_text or '' }}</textarea></label>
+        <label class="full">Tentang saya paragraf 2<textarea name="about_text_secondary" rows="4" required>{{ profile.about_text_secondary or '' }}</textarea></label>
+        <label>Email<input type="email" name="email" value="{{ profile.email or '' }}" required></label>
+        <label>Telepon<input name="phone" value="{{ profile.phone or '' }}" required></label>
+        <label>Lokasi<input name="location" value="{{ profile.location or '' }}" required></label>
+        <label>Pendidikan<input name="education" value="{{ profile.education or '' }}" required></label>
+        <label>Status kerja<input name="work_status" value="{{ profile.work_status or '' }}"></label>
+        <label>Teks footer<input name="footer_text" value="{{ profile.footer_text or '' }}"></label>
+        <label>URL GitHub<input type="url" name="github_url" value="{{ profile.github_url or '' }}"></label>
+        <label>URL LinkedIn<input type="url" name="linkedin_url" value="{{ profile.linkedin_url or '' }}"></label>
+        <label>Foto hero<input type="file" name="hero_image" accept="image/*"><small>Gambar saat ini: {{ profile.hero_image_url or '-' }}</small></label>
+        <label>Foto about<input type="file" name="about_image" accept="image/*"><small>Gambar saat ini: {{ profile.about_image_url or '-' }}</small></label>
+        <label class="full">File CV PDF<input type="file" name="cv_file" accept="application/pdf"><small>CV saat ini: {{ profile.cv_url or '-' }}</small></label>
+    </div>
+    <button class="admin-btn primary" type="submit">Simpan Profil</button>
+</form>
+{% endblock %}

@@ -1,0 +1,5 @@
+{% extends "admin/base.html" %}{% block heading %}Skills{% endblock %}{% block content %}
+<div class="page-actions"><a class="admin-btn primary" href="{{ url_for('admin.skill_form') }}">+ Tambah Skill</a></div>
+<section class="admin-card"><div class="table-wrap"><table><thead><tr><th>Urutan</th><th>Ikon</th><th>Kategori</th><th>Daftar</th><th>Aksi</th></tr></thead><tbody>
+{% for item in skills %}<tr><td>{{ item.sort_order }}</td><td><span class="material-symbols-outlined">{{ item.icon }}</span></td><td>{{ item.category }}</td><td>{{ item.item_list|join(', ') }}</td><td class="actions"><a href="{{ url_for('admin.skill_form', item_id=item.id) }}">Edit</a><form action="{{ url_for('admin.skill_delete', item_id=item.id) }}" method="post" data-confirm="Hapus skill ini?"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button>Hapus</button></form></td></tr>{% else %}<tr><td colspan="5">Belum ada skill.</td></tr>{% endfor %}
+</tbody></table></div></section>{% endblock %}
