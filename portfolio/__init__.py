@@ -8,9 +8,24 @@ from .extensions import csrf, db, login_manager
 
 
 def create_app(config_object=Config):
-    app = Flask(__name__, static_folder=None, template_folder="templates")
+    package_dir = Path(__file__).resolve().parent
+    template_dir = package_dir / "templates"
+
+    app = Flask(
+        __name__,
+        static_folder=None,
+        template_folder=str(template_dir),
+    )
+
     app.config.from_object(config_object)
-    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1)
+
+    app.wsgi_app = ProxyFix(
+        app.wsgi_app,
+        x_for=1,
+        x_proto=1,
+        x_host=1,
+        x_port=1,
+    )
 
     db.init_app(app)
     login_manager.init_app(app)
