@@ -124,16 +124,72 @@
                 </div>
             </div>
             <div class="contact-form-wrap">
-                <form method="post" action="{{ url_for('public.contact') }}" class="contact-form">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                    <div class="form-row">
-                        <label>Nama<input type="text" nama="nama" placeholder="Masukkan Nama Kamu" maxlength="150" required></label>
-                        <label>Email<input type="email" name="email" placeholder="Masukkan Email Kamu" maxlength="190" required></label>
-                    </div>
-                    <label>Subject<input type="text" name="subject" placeholder="Judul Pesan" maxlength="220" required></label>
-                    <label>Pesan<textarea name="message" rows="5" placeholder="Tulis Pesan Kamu" maxlength="5000" required></textarea></label>
-                    <button class="btn btn-primary submit-btn" type="submit">Kirim Pesan</button>
-                </form>
+                <form
+  class="contact-form"
+  method="POST"
+  action="{{ url_for('public.contact') }}"
+>
+  <input
+    type="hidden"
+    name="csrf_token"
+    value="{{ csrf_token() }}"
+  >
+
+  <div class="form-row">
+    <label>
+      Nama
+      <input
+        type="text"
+        name="name"
+        placeholder="Masukkan Nama Kamu"
+        maxlength="150"
+        autocomplete="name"
+        required
+      >
+    </label>
+
+    <label>
+      Email
+      <input
+        type="email"
+        name="email"
+        placeholder="Masukkan Email Kamu"
+        maxlength="190"
+        autocomplete="email"
+        required
+      >
+    </label>
+  </div>
+
+  <label>
+    Subject
+    <input
+      type="text"
+      name="subject"
+      placeholder="Judul Pesan"
+      maxlength="220"
+      required
+    >
+  </label>
+
+  <label>
+    Pesan
+    <textarea
+      name="message"
+      rows="6"
+      placeholder="Tulis Pesan Kamu"
+      maxlength="5000"
+      required
+    ></textarea>
+  </label>
+
+  <button
+    type="submit"
+    class="btn btn-primary submit-btn"
+  >
+    Kirim Pesan
+  </button>
+</form>
             </div>
         </div>
     </section>
