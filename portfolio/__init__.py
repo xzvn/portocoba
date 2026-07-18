@@ -1,10 +1,12 @@
-﻿from pathlib import Path
+from pathlib import Path
 
 from flask import Flask, jsonify, send_from_directory
+from jinja2 import ChoiceLoader, DictLoader
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from .config import Config, apply_runtime_config
 from .extensions import csrf, db, login_manager
+from .embedded_templates import EMBEDDED_TEMPLATES
 
 
 def create_app(config_object=Config):
@@ -16,6 +18,13 @@ def create_app(config_object=Config):
         static_folder=None,
         template_folder=str(template_dir),
     )
+
+    # Gunakan file template normal saat tersedia, lalu fallback ke template
+    # yang disematkan dalam modul Python agar tetap tersedia di Vercel.
+    app.jinja_loader = ChoiceLoader([
+        app.jinja_loader,
+        DictLoader(EMBEDDED_TEMPLATES),
+    ])
 
     app.config.from_object(config_object)
     apply_runtime_config(app)
