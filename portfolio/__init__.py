@@ -1,4 +1,4 @@
-from pathlib import Path
+﻿from pathlib import Path
 
 from flask import Flask, jsonify, send_from_directory
 from werkzeug.middleware.proxy_fix import ProxyFix
@@ -8,8 +8,8 @@ from .extensions import csrf, db, login_manager
 
 
 def create_app(config_object=Config):
-    package_dir = Path(__file__).resolve().parent
-    template_dir = package_dir / "templates"
+    project_dir = Path(__file__).resolve().parent.parent
+    template_dir = project_dir / "templates"
 
     app = Flask(
         __name__,
@@ -50,7 +50,7 @@ def create_app(config_object=Config):
     app.register_blueprint(auth_bp)
     app.register_blueprint(admin_bp)
 
-    public_dir = Path(app.root_path).parent / "public"
+    public_dir = project_dir / "public"
 
     @app.get("/css/<path:filename>")
     def public_css(filename):
@@ -77,3 +77,4 @@ def create_app(config_object=Config):
         return jsonify({"success": False, "message": "Ukuran file terlalu besar. Maksimal 4 MB."}), 413
 
     return app
+
