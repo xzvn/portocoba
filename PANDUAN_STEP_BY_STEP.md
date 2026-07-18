@@ -194,7 +194,7 @@ Login admin lalu ubah:
 - nama brand
 - nama lengkap
 - headline
-- deskripsi hero
+- ipsi hero
 - about
 - lokasi
 - pendidikan

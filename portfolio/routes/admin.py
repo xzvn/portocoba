@@ -188,7 +188,7 @@ def project_form(item_id=None):
             return render_template("admin/project_form.html", item=item)
 
         if not all([item.title, item.description, item.technologies]):
-            flash("Judul, deskripsi, dan teknologi wajib diisi.", "danger")
+            flash("Judul, description, dan teknologi wajib diisi.", "danger")
             return render_template("admin/project_form.html", item=item)
 
         db.session.add(item)

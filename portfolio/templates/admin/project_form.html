@@ -1,3 +1,122 @@
-{% extends "admin/base.html" %}{% block heading %}{{ 'Edit' if item.id else 'Tambah' }} Proyek{% endblock %}{% block content %}
-<form class="admin-card admin-form" method="post" enctype="multipart/form-data"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><div class="form-grid two">
-<label>Judul<input name="title" value="{{ item.title or '' }}" required></label><label>Urutan<input type="number" name="sort_order" value="{{ item.sort_order or 0 }}"></label><label class="full">Deskripsi<textarea name="Deskripsi" rows="5" required>{{ item.description or '' }}</textarea></label><label class="full">Teknologi<textarea name="technologies" rows="3" required>{{ item.technologies or '' }}</textarea><small>Pisahkan dengan baris baru atau koma.</small></label><label>Live URL<input type="url" name="live_url" value="{{ item.live_url or '' }}"></label><label>Code URL<input type="url" name="code_url" value="{{ item.code_url or '' }}"></label><label class="full">Gambar proyek<input type="file" name="image" accept="image/*"><small>Gambar saat ini: {{ item.image_url or '-' }}</small></label><label class="check-row"><input type="checkbox" name="is_featured" {% if item.is_featured or not item.id %}checked{% endif %}> Tampilkan di halaman utama</label></div><button class="admin-btn primary">Simpan</button></form>{% endblock %}
+{% extends "admin/base.html" %}
+
+{% block heading %}
+    {{ "Edit" if item.id else "Tambah" }} Proyek
+{% endblock %}
+
+{% block content %}
+<form
+    class="admin-card admin-form"
+    method="post"
+    enctype="multipart/form-data"
+>
+    <input
+        type="hidden"
+        name="csrf_token"
+        value="{{ csrf_token() }}"
+    >
+
+    <div class="form-grid two">
+        <label>
+            Judul
+            <input
+                type="text"
+                name="title"
+                value="{{ request.form.get('title', item.title or '') }}"
+                required
+            >
+        </label>
+
+        <label>
+            Urutan
+            <input
+                type="number"
+                name="sort_order"
+                value="{{ request.form.get(
+                    'sort_order',
+                    item.sort_order or 0
+                ) }}"
+            >
+        </label>
+
+        <label class="full">
+            Deskripsi
+            <textarea
+                name="description"
+                rows="5"
+                required
+            >{{ request.form.get(
+                'description',
+                item.description or ''
+            ) }}</textarea>
+        </label>
+
+        <label class="full">
+            Teknologi
+            <textarea
+                name="technologies"
+                rows="3"
+                required
+            >{{ request.form.get(
+                'technologies',
+                item.technologies or ''
+            ) }}</textarea>
+
+            <small>Pisahkan dengan baris baru atau koma.</small>
+        </label>
+
+        <label>
+            Live URL
+            <input
+                type="url"
+                name="live_url"
+                value="{{ request.form.get(
+                    'live_url',
+                    item.live_url or ''
+                ) }}"
+            >
+        </label>
+
+        <label>
+            Code URL
+            <input
+                type="url"
+                name="code_url"
+                value="{{ request.form.get(
+                    'code_url',
+                    item.code_url or ''
+                ) }}"
+            >
+        </label>
+
+        <label class="full">
+            Gambar proyek
+            <input
+                type="file"
+                name="image"
+                accept="image/jpeg,image/png,image/webp"
+            >
+
+            <small>
+                Gambar saat ini: {{ item.image_url or "-" }}
+            </small>
+        </label>
+
+        <label class="check-row">
+            <input
+                type="checkbox"
+                name="is_featured"
+                {% if item.is_featured or not item.id %}checked{% endif %}
+            >
+            Tampilkan di halaman utama
+        </label>
+    </div>
+
+    <button
+        type="submit"
+        class="admin-btn primary"
+    >
+        Simpan
+    </button>
+</form>
+{% endblock %}
